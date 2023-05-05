@@ -52,5 +52,27 @@ namespace TestProject1
             //Assert
             Assert.Equal(2, fat);
         }
+        [Theory]
+        [InlineData("Andre", "Asd-1243", "Preto", "Gol")]
+        [Trait("Funcionalidade", "Localizar Veiculo No Patio")]
+        public void LocalizarVeiculoNoPatio(string proprietario, string placa, string cor, string modelo)
+        {
+            //Arrange
+            var estacionamento = new Patio();
+            var veiculo = new Veiculo();
+            veiculo.Proprietario = proprietario;
+            veiculo.Tipo = TipoVeiculo.Automovel;
+            veiculo.Cor = cor;
+            veiculo.Modelo = modelo;
+            veiculo.Placa = placa;
+            estacionamento.RegistrarEntradaVeiculo(veiculo);
+
+            //Act
+            var consulta = estacionamento.PesquisaVeiculo(placa);
+
+            //Assert
+            Assert.Equal(placa, consulta.Placa);
+        }
+
     }
 }
