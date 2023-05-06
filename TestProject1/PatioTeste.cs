@@ -31,9 +31,9 @@ namespace TestProject1
             Assert.Equal(2, fat);
         }
         [Theory]
-        [InlineData("tes1","Asd-1243","Preto","Gol")]
+        [InlineData("tes1", "Asd-1243", "Preto", "Gol")]
         [InlineData("tes2", "Asd-1543", "Preto", "Corsa")]
-        public void TestarFaturamentoVariosVeiculos(string proprietario,string placa, string cor, string modelo)
+        public void TestarFaturamentoVariosVeiculos(string proprietario, string placa, string cor, string modelo)
         {
             //Arrange
             var estacionamento = new Patio();
@@ -72,6 +72,30 @@ namespace TestProject1
 
             //Assert
             Assert.Equal(placa, consulta.Placa);
+        }
+        [Fact]
+        public void AlterarDadosVeiculo()
+        {
+            //Arrange
+            var estacionamento = new Patio();
+            var veiculo = new Veiculo();
+            veiculo.Proprietario = "Felipe";
+            veiculo.Cor = "Cinza";
+            veiculo.Modelo = "Gol";
+            veiculo.Placa = "Asd-1243";
+            estacionamento.RegistrarEntradaVeiculo(veiculo);
+
+            var veiculoAlterado = new Veiculo();
+            veiculoAlterado.Proprietario = "Felipe";
+            veiculoAlterado.Tipo = TipoVeiculo.Automovel;
+            veiculoAlterado.Cor = "Preto";
+            veiculoAlterado.Modelo = "Gol";
+            veiculoAlterado.Placa = "Asd-1243";
+            //Act
+            Veiculo alterado = estacionamento.AlterarDadosVeiculo(veiculoAlterado);
+
+            //Assert
+            Assert.Equal(alterado.Cor, veiculoAlterado.Cor);
         }
 
     }
