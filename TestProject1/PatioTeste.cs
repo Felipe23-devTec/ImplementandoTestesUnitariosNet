@@ -5,17 +5,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit.Abstractions;
 
 namespace TestProject1
 {
-    public class PatioTeste
+    public class PatioTeste : IDisposable
     {
+        private Veiculo veiculo;
+        public ITestOutputHelper Output { get; }
+
+        public PatioTeste(ITestOutputHelper output)
+        {
+            Output = output;
+            Output.WriteLine("Opa");
+        
+            veiculo = new Veiculo();
+            
+        }
         [Fact]
         public void TestarFaturamento()
         {
             //Arrange
             var estacionamento = new Patio();
-            var veiculo = new Veiculo();
+            //var veiculo = new Veiculo();
             veiculo.Proprietario = "Anddre";
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = "Verde";
@@ -24,6 +36,7 @@ namespace TestProject1
 
             estacionamento.RegistrarEntradaVeiculo(veiculo);
             estacionamento.RegistrarSaidaVeiculo(veiculo.Placa);
+            Output.WriteLine("pa");
 
             //Act
             double fat = estacionamento.TotalFaturado();
@@ -37,7 +50,7 @@ namespace TestProject1
         {
             //Arrange
             var estacionamento = new Patio();
-            var veiculo = new Veiculo();
+            //var veiculo = new Veiculo();
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = cor;
@@ -59,7 +72,7 @@ namespace TestProject1
         {
             //Arrange
             var estacionamento = new Patio();
-            var veiculo = new Veiculo();
+            //var veiculo = new Veiculo();
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = cor;
@@ -78,7 +91,7 @@ namespace TestProject1
         {
             //Arrange
             var estacionamento = new Patio();
-            var veiculo = new Veiculo();
+            //var veiculo = new Veiculo();
             veiculo.Proprietario = "Felipe";
             veiculo.Cor = "Cinza";
             veiculo.Modelo = "Gol";
@@ -98,5 +111,9 @@ namespace TestProject1
             Assert.Equal(alterado.Cor, veiculoAlterado.Cor);
         }
 
+        public void Dispose()
+        {
+            Output.WriteLine("Invocado");
+        }
     }
 }
